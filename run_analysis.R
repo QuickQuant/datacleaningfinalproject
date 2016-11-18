@@ -1,4 +1,7 @@
 getwd()
+library(data.table)
+library(dplyr)
+library(stringr)
 fread("data/UCI HAR Dataset/test/Inertial Signals/body_acc_x_test.txt")
 fread("data/UCI HAR Dataset/train/Inertial Signals/body_acc_x_train.txt")
 ## merge data sets
@@ -29,6 +32,7 @@ for(i in 1:length(inSigPrefixes$test)){
               file = gsub(".txt", "_summary.csv", gsub("test", "merged", inSigPrefixes$test[i])))
   write.csv(mergeData, file = gsub("txt", "csv", gsub("test", "merged", inSigPrefixes$test[i])))
 }
+write.table(masterTable, file = "data/UCI HAR Dataset/merged/Inertial Signals/all_inertia_summary.txt")
 flatdata <- ydata <- xdata <- list()
 
 xdata$test <- fread("data/UCI HAR Dataset/test/X_test.txt")
@@ -43,4 +47,4 @@ endMean <- mean(unlist(flatData))
                        dimnames = list(c("mean","sd"))
                 )
 write.csv(summaryMat,
-            file = "data/UCI HAR DatasetXYSummary.csv")
+            file = "data/UCI HAR Dataset/XYSummary.csv")
